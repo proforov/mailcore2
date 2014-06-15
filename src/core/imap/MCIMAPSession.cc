@@ -3579,6 +3579,10 @@ uint32_t IMAPSession::firstUnseenUid()
     return mFirstUnseenUid;
 }
 
+uint32_t IMAPSession::lastSequenceNumber(){
+    return mLastFetchedSequenceNumber;
+}
+
 IMAPSyncResult * IMAPSession::syncMessagesByUID(String * folder, IMAPMessagesRequestKind requestKind,
                                                 IndexSet * uids, uint64_t modseq,
                                                 IMAPProgressCallback * progressCallback, ErrorCode * pError)

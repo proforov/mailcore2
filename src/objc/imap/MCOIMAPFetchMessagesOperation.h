@@ -26,6 +26,12 @@
 @property (nonatomic, copy) NSArray * extraHeaders;
 
 /** 
+ Last sequnce number of all fetched messages.
+ Useful for getting sequence namber for UID.
+ */
+@property (nonatomic, assign) NSUInteger lastSequenceNumber;
+
+/** 
  Starts the asynchronous fetch operation.
 
  @param completionBlock Called when the operation is finished.

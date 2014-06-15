@@ -61,6 +61,7 @@ typedef void (^CompletionType)(NSError *error, NSArray * messages, MCOIndexSet *
     
     nativeType *op = MCO_NATIVE_INSTANCE;
     if (op->error() == mailcore::ErrorNone) {
+        self.lastSequenceNumber = op->lastSequenceNumber();
         _completionBlock(nil, MCO_TO_OBJC(op->messages()), MCO_TO_OBJC(op->vanishedMessages()));
     } else {
         _completionBlock([NSError mco_errorWithErrorCode:op->error()], nil, nil);

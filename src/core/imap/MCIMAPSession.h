@@ -166,6 +166,7 @@ namespace mailcore {
         virtual uint64_t modSequenceValue();
         virtual unsigned int lastFolderMessageCount();
         virtual uint32_t firstUnseenUid();
+        virtual uint32_t lastSequenceNumber();
         
         virtual bool isIdleEnabled();
         virtual bool isXListEnabled();

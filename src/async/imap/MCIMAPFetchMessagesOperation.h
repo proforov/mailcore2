@@ -33,6 +33,8 @@ namespace mailcore {
         virtual void setKind(IMAPMessagesRequestKind kind);
         virtual IMAPMessagesRequestKind kind();
         
+        virtual uint32_t lastSequenceNumber();
+        
         virtual void setExtraHeaders(Array * extraHeaders);
         virtual Array * extraHeaders();
         
@@ -51,6 +53,7 @@ namespace mailcore {
         Array * /* IMAPMessage */ mMessages;
         IndexSet * mVanishedMessages;
         uint64_t mModSequenceValue;
+        uint32_t mLastSequenceNumber;
         
     };
     

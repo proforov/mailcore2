@@ -22,6 +22,7 @@ IMAPFetchMessagesOperation::IMAPFetchMessagesOperation()
     mVanishedMessages = NULL;
     mModSequenceValue = 0;
     mExtraHeaders = NULL;
+    mLastSequenceNumber = 0;
 }
 
 IMAPFetchMessagesOperation::~IMAPFetchMessagesOperation()
@@ -72,6 +73,10 @@ IMAPMessagesRequestKind IMAPFetchMessagesOperation::kind()
     return mKind;
 }
 
+uint32_t IMAPFetchMessagesOperation::lastSequenceNumber(){
+    return mLastSequenceNumber;
+}
+
 void IMAPFetchMessagesOperation::setExtraHeaders(Array * extraHeaders) {
     MC_SAFE_REPLACE_COPY(Array, mExtraHeaders, extraHeaders);
 }
@@ -103,16 +108,19 @@ void IMAPFetchMessagesOperation::main()
             if (syncResult != NULL) {
                 mMessages = syncResult->modifiedOrAddedMessages();
                 mVanishedMessages = syncResult->vanishedMessages();
+                mLastSequenceNumber = session()->session()->lastSequenceNumber();
             }
         }
         else {
             mMessages = session()->session()->fetchMessagesByUIDWithExtraHeaders(folder(), mKind, mIndexes, this,
                                                                                  mExtraHeaders, &error);
+            mLastSequenceNumber = session()->session()->lastSequenceNumber();
         }
     }
     else {
         mMessages = session()->session()->fetchMessagesByNumberWithExtraHeaders(folder(), mKind, mIndexes, this,
                                                                                 mExtraHeaders, &error);
+        mLastSequenceNumber = session()->session()->lastSequenceNumber();
     }
     MC_SAFE_RETAIN(mMessages);
     MC_SAFE_RETAIN(mVanishedMessages);
